@@ -1,4 +1,4 @@
-# healthmon — Installation & Operations Guide
+# Healthmon — Installation & Operations Guide
 
 A lightweight bash-based health monitor that watches CPU, memory, disk, and systemd services, and pushes real-time alerts (and recovery notices) to Slack via webhook.
 
