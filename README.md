@@ -778,6 +778,9 @@ Increase `COOLDOWN_SEC` to reduce noise. Or use `systemctl is-active` + retry lo
 
 Your `df` is likely aliased with `-P` in your shell (this is the exact `-P` / `--output` mutual-exclusion issue). The daemon runs without shell aliases, so it isn't affected — but if you test the `df` command manually in your shell and see an error, use `\df` or `command df` to bypass the alias.
 
+<img width="959" height="479" alt="image" src="https://github.com/user-attachments/assets/e19ec410-f6ff-48f9-9a6f-0233e045da12" />
+
+
 ---
 
 ## 12. Tuning Recommendations
