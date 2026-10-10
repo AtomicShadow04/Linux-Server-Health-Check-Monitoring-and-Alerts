@@ -48,7 +48,7 @@ You need three things installed:
 
 ```bash
 sudo apt update
-sudo apt install -y curl stress nginx
+sudo apt install -y curl stress-ng nginx
 ```
 
 ### On RHEL / Rocky / AlmaLinux / Fedora
@@ -644,14 +644,14 @@ Should print `enabled`.
 
 ```bash
 # Stress all cores for 60 seconds
-stress --cpu "$(nproc)" --timeout 60s
+stress-ng --cpu "$(nproc)" --timeout 60s
 # (On RHEL: stress-ng --cpu "$(nproc)" --timeout 60s)
 ```
 
 Wait ~15 seconds. You should see in the log:
 
 ```
-[CRIT] CPU at 92% (limit 85%)
+[CRIT] CPU at 92% (limit 80%)
 ```
 
 And a 🚨 message in Slack. When stress ends, you'll get:
@@ -668,7 +668,7 @@ And a ✅ message in Slack.
 stress --vm 1 --vm-bytes 95% --timeout 30s
 ```
 
-Expected: `[CRIT] Memory at 96% (limit 90%)`, then a recovery.
+Expected: `[CRIT] Memory at 96% (limit 80%)`, then a recovery.
 
 ### Test 3 — Service down alert
 
@@ -696,21 +696,12 @@ You'll get:
 
 ### Test 4 — Disk alert (hard to trigger safely)
 
-Don't actually fill a real disk. Instead, temporarily lower the threshold to confirm the code path:
-
 ```bash
-sudo sed -i 's/DISK_THRESHOLD=.*/DISK_THRESHOLD=1/' /etc/healthmon/healthmon.conf
-sudo systemctl restart healthmon.service
-sleep 65   # disk check runs once per minute
-grep disk /var/log/healthmon/healthmon.log | tail
+stress-ng --vm 1 --vm-bytes 95% --timeout 30s
+cat /etc/log/healthmon/healthmon.log
 ```
 
-You should see `[CRIT] Disk / at X% (limit 1%)`. Revert:
-
-```bash
-sudo sed -i 's/DISK_THRESHOLD=.*/DISK_THRESHOLD=90/' /etc/healthmon/healthmon.conf
-sudo systemctl restart healthmon.service
-```
+You should see `[CRIT] Disk / at X% (limit 80%)`.
 
 ### Test 5 — Webhook sanity check
 
