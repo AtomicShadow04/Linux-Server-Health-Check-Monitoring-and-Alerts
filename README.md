@@ -124,9 +124,9 @@ Paste:
 
 ```bash
 # ---------- Thresholds (percent) ----------
-CPU_THRESHOLD=85
-MEM_THRESHOLD=90
-DISK_THRESHOLD=90
+CPU_THRESHOLD=80
+MEM_THRESHOLD=80
+DISK_THRESHOLD=80
 
 # ---------- Timing ----------
 # Seconds between each full check cycle
